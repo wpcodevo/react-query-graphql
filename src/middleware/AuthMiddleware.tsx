@@ -29,7 +29,7 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
     {},
     {
       retry: 1,
-      enabled: Boolean(cookies.logged_in),
+      enabled: !!cookies.logged_in,
       onSuccess: (data) => {
         stateContext.dispatch({
           type: 'SET_USER',
@@ -51,7 +51,9 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
     }
   );
 
-  if (query.isLoading) {
+  console.log(query.isLoading);
+
+  if (query.isLoading && cookies.logged_in) {
     return <FullScreenLoader />;
   }
 
